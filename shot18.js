@@ -1,0 +1,28 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+(async () => {
+  const b64 = fs.readFileSync('/tmp/main_cookie3.txt','utf8').trim();
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: {width:1560,height:1000} });
+  await ctx.addCookies([{name:'sb-mpxvegyzpybnipokztbz-auth-token', value:b64, domain:'carrybee-lead-crm.vercel.app', path:'/', secure:true, sameSite:'Lax'}]);
+  const page = await ctx.newPage(); const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+  await page.goto('https://carrybee-lead-crm.vercel.app/', {waitUntil:'domcontentloaded', timeout:120000});
+  await page.waitForSelector('text=New to LQT', {timeout:120000});
+  await page.locator('.sidebar >> text=New to LQT').click(); await page.waitForTimeout(3000);
+  await page.locator('tbody tr').first().click();
+  await page.waitForSelector('.drawer', {timeout:30000});
+  const opts = await page.locator('label:has-text("Outcome / status") select option').allTextContents();
+  await page.locator('label:has-text("Outcome / status") select').selectOption({label: opts.find(o=>/Follow Up Need|Contacted/.test(o))});
+  await page.waitForTimeout(800);
+  console.log('CHECKBOX COPY>>>', (await page.locator('.callback-hold').innerText()).replace(/\n/g,' | '));
+  await page.locator('.callback-hold input[type=checkbox]').check(); await page.waitForTimeout(400);
+  console.log('AFTER TICK>>>', (await page.locator('.callback-hold').innerText()).replace(/\n/g,' | '));
+  console.log('date hint>>>', (await page.innerText('.drawer')).match(/Lead-requested wait[^\n]*/)?.[0]);
+  await page.screenshot({path:'/home/user/callback-drawer.png'});
+  await page.locator('.drawer-head button').click(); await page.waitForTimeout(1200);
+  await page.locator('.sidebar >> text=Follow-up rulebook').click(); await page.waitForTimeout(3000);
+  const rb = await page.innerText('main');
+  console.log('rulebook renamed:', rb.includes('Longest lead-requested wait'), rb.includes('Allow lead-requested later callbacks'));
+  console.log('ERRS', errs.slice(0,2));
+  await browser.close();
+})();

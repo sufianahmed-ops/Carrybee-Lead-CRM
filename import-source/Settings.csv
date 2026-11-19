@@ -1,0 +1,18 @@
+Key,Value,What it controls
+FIRST_CONTACT_DAYS,1,1st call due this many days after Assign Date
+CNR_GAP_DAYS,1,Days between CNR retries (back to back = 1)
+CNR_MAX,3,CNRs before the lead becomes Silent Leads automatically
+MAX_TOUCHES,3,LQT touches per lead (1st contact + 2 follow-ups)
+FU1_DAYS,3,Default 1st follow-up: days after 1st contact
+FU1_MAX,7,Latest 1st follow-up: days after 1st contact
+FU2_DAYS,7,Default 2nd follow-up: days after 1st contact
+FU2_MAX,10,Latest 2nd follow-up: days after 1st contact
+FINAL_SLA_DAYS,20,LQT must reach a final status or Qualified within this many days of Assign Date
+TRIP_DAYS,10,Incubation: days from handover accept to 1st trip
+CARE_DAYS,30,Care period length from the 1st trip date
+INC_GAP_DAYS,2,Incubation: default days to the next call
+HANDOVER_CALL_MIN,15,Incubation must call within this many minutes of the booked slot
+ENFORCE_POINTS,TRUE,TRUE = all talking points must be covered before Qualified
+QUALIFY_REQUIRED,"Business ID, Product Category, Parcel Volume, Zone, Area",Lead fields required before Qualified
+BID_REQUIRED_STATUSES,"Qualified, Onboarded (complete profile), 1st Trip Complete",Statuses that need a Business ID
+LEAD_ID_PREFIX,CB,Prefix for new Lead IDs

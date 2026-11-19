@@ -1,0 +1,16 @@
+Tab,Count,,Check,Count,,Agent,Team,Open,Queue,New,Due Today,Overdue,1st Contact Late,SLA Breached,Handover Pending,Trip Overdue,In Care,Calls Today,Calls 7 Days
+New Leads,24,,All Leads,57,,Admin,Management,0,0,0,0,0,0,0,0,0,0,0,0
+Follow Up,12,,Open Leads,48,,Md.Mahmudul Hasan,Incubation ,0,0,0,0,0,0,0,0,0,0,0,0
+CNR,9,,Unassigned,1,,MD. Zahin Rahman,LQT,27,27,23,0,4,0,0,0,0,0,0,9
+Handover Inbox,2,,Overdue,24,,Md. shariful Islam Tonoy,LQT,19,17,0,0,19,0,0,2,0,0,0,39
+Incubation Queue,0,,Due Today,0,,Mohammad Sazzad Haider,Incubation,1,1,0,0,1,0,0,0,0,1,0,2
+Care Period,1,,First Contact Late,0,,MD.Ebrahim Emu,Incubation,0,0,0,0,0,0,0,0,0,0,0,0
+Silent Leads,3,,SLA Breached,0,,Eyaliduzzaman Shunucki,Incubation,0,0,0,0,0,0,0,0,0,0,0,0
+Not Interested,0,,Missing Business ID,0,,Md.Mahmudul Hasan,Incubation ,0,0,0,0,0,0,0,0,0,0,0,0
+Ineligible,2,,Old Follow-ups,0,,MD. Zahin Rahman,LQT,27,27,23,0,4,0,0,0,0,0,0,9
+Blocked,1,,Onboarding Tracker,1,,Md. shariful Islam Tonoy,LQT,19,17,0,0,19,0,0,2,0,0,0,39
+Managed by KAM,3,,Handover Call Overdue,2,,Mohammad Sazzad Haider,Incubation,1,1,0,0,1,0,0,0,0,1,0,2
+Follow Up - Cold,0,,Trip Overdue,0,,MD.Ebrahim Emu,Incubation,0,0,0,0,0,0,0,0,0,0,0,0
+Managed by ACQ,0,,In Care,1,,Eyaliduzzaman Shunucki,Incubation,0,0,0,0,0,0,0,0,0,0,0,0
+Care Completed,0,,Calls Today,0,,,,,,,,,,,,,,,
+,,,Calls This Month,50,,,,,,,,,,,,,,,

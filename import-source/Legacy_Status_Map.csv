@@ -1,0 +1,33 @@
+Old Status,New Status,Default Reason
+Contacted — Interested,Contacted — Interested,
+Contacted - Interested,Contacted — Interested,
+Need Follow Up,1st Follow Up Need,Decision Pending
+1st Follow Up Need,1st Follow Up Need,
+Need 2nd Follow Up,2nd Follow Up Need,Decision Pending
+2nd Follow Up Need,2nd Follow Up Need,
+Under Follow Up - As Potential Merchant,1st Follow Up Need,Decision Pending
+CNR,CNR,CNR — Didn't Pick Up Call
+CNR 1,CNR,CNR — Didn't Pick Up Call
+CNR 2,CNR,CNR — Didn't Pick Up Call
+CNR 3,CNR,CNR — Didn't Pick Up Call
+Invalid Number/Unreachable Number,CNR,CNR — Unreachable Number
+Onboarding In Process,Awaiting 1st Trip,
+Awaiting 1st Trip,Awaiting 1st Trip,
+Onboarded,Onboarded (complete profile),
+Onboarded (complete profile),Onboarded (complete profile),
+1st Trip Complete,1st Trip Complete,1st Trip Done
+Ready for Handover,1st Trip Complete,1st Trip Done
+Handed to AD,1st Trip Complete,1st Trip Done
+Managed by KAM,Managed by KAM,KAM Lead
+Not Interested,Not Interested,Other
+Ineligible,Ineligible,Other
+Ineligible - Restricted Item,Ineligible,Restricted Product
+Restricted Product,Ineligible,Restricted Product
+Mistakenly Opened Account,Ineligible,Mistakenly Opened Account
+Duplicate Business Profile,Ineligible,Duplicate Business Profile
+Duplicate Account,Ineligible,Duplicate Account
+Pickup Unavailable,Blocked,Pickup Unavailable
+Blocked,Blocked,Other
+Silent Leads,Silent Leads,
+Follow Up - Cold,Follow Up - Cold,Decision Pending
+Managed by ACQ,Managed by ACQ,Other

@@ -1,0 +1,20 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+(async () => {
+  const b64 = fs.readFileSync('/tmp/tonoy_cookie.txt','utf8').trim();
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: {width:1500,height:1000} });
+  await ctx.addCookies([{name:'sb-mpxvegyzpybnipokztbz-auth-token', value:b64, domain:'carrybee-lead-crm.vercel.app', path:'/', secure:true, sameSite:'Lax'}]);
+  const page = await ctx.newPage(); const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+  await page.goto('https://carrybee-lead-crm.vercel.app/', {waitUntil:'domcontentloaded', timeout:120000});
+  await page.waitForSelector('text=New to LQT', {timeout:120000});
+  await page.waitForTimeout(1200);
+  const nav = await page.innerText('.sidebar');
+  console.log('agent sees team list?', nav.includes('Qualified (team)'), '| sees mine?', nav.includes('Qualified by me'));
+  await page.locator('.sidebar >> text=Qualified by me').click(); await page.waitForTimeout(3000);
+  console.log('TONOY main>>>', (await page.innerText('main')).split('\n').slice(0,6).join(' | ').slice(0,300));
+  console.log('rows', await page.locator('tbody tr').count());
+  await page.screenshot({path:'/home/user/qualified-by-me-tonoy.png'});
+  console.log('ERRS', errs.slice(0,2));
+  await browser.close();
+})();

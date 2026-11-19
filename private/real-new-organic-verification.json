@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "runId": 31,
+  "leadId": "CB-011134",
+  "businessId": "39448",
+  "source": "Self Registered",
+  "unassigned": true,
+  "callLogs": 0,
+  "realNewMerchantInserted": true,
+  "addressPreserved": true,
+  "registrationMetadataPreserved": true
+}

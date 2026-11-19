@@ -1,0 +1,18 @@
+Status,Stage,Tab,Is Final,Set By,Needs Next Date,Reason Required,Allowed Reasons,Meaning
+New,LQT,New Leads,No,System,No,No,,"Assigned in the sheet, not called yet"
+Contacted — Interested,LQT,Follow Up,No,LQT,Yes,No,"Decision Pending, Busy — Will Talk Later, New Business, Will Start Soon, Business Not Started Yet",Spoke to the merchant; interested
+1st Follow Up Need,LQT,Follow Up,No,LQT,Yes,No,"Decision Pending, Busy — Will Talk Later, New Business, Will Start Soon, Business Not Started Yet",Needs the 1st follow-up
+2nd Follow Up Need,LQT,Follow Up,No,LQT,Yes,No,"Decision Pending, Busy — Will Talk Later, New Business, Will Start Soon, Business Not Started Yet",Needs the 2nd follow-up
+CNR,LQT,CNR,No,LQT,No,Yes,"CNR — Didn't Pick Up Call, CNR — Unreachable Number, Busy — Will Talk Later",Call not received; retry next day
+Qualified,Handover,Handover Inbox,No,LQT,No,No,,LQT done; waiting for Incubation to accept
+Awaiting 1st Trip,Incubation,Incubation Queue,No,Incubation,Yes,No,"Decision Pending, Busy — Will Talk Later, New Business, Will Start Soon, Business Not Started Yet, CNR — Didn't Pick Up Call, CNR — Unreachable Number, Busy — Will Talk Later",Handover accepted; working to the 1st trip
+Onboarded (complete profile),Incubation,Incubation Queue,No,Incubation,Yes,No,"Decision Pending, Busy — Will Talk Later, New Business, Will Start Soon, Business Not Started Yet, CNR — Didn't Pick Up Call, CNR — Unreachable Number, Busy — Will Talk Later",Profile complete; no trip yet
+1st Trip Complete,Incubation,Care Period,No,Incubation,Yes,No,"1st Trip Done, Care — Happy, Care — Needs Growth Support, Care — Service Issue, CNR — Didn't Pick Up Call",30-day care period running
+Silent Leads,Final,Silent Leads,Yes,System,No,No,,Set automatically after CNR_MAX CNRs
+Not Interested,Final,Not Interested,Yes,Both,No,Yes,"Other, Decision Pending",Merchant declined
+Ineligible,Final,Ineligible,Yes,Both,No,Yes,"C2C, Restricted Product, Mistakenly Opened Account, Duplicate Business Profile, Duplicate Account, Other",Cannot be served
+Blocked,Final,Blocked,Yes,Both,No,Yes,"Pickup Unavailable, Other",Blocked
+Managed by KAM,Final,Managed by KAM,Yes,Both,No,No,KAM Lead,Merchant already has a KAM
+Follow Up - Cold,Final,Follow Up - Cold,Yes,LQT,No,No,Decision Pending,No decision after the last touch
+Managed by ACQ,Final,Managed by ACQ,Yes,Both,No,No,Other,Handled by the ACQ team
+Care Completed,Final,Care Completed,Yes,System,No,No,,Set automatically CARE_DAYS after the 1st trip

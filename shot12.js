@@ -1,0 +1,21 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+(async () => {
+  const b64 = fs.readFileSync('/tmp/main_cookie2.txt','utf8').trim();
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: {width:1500,height:1000} });
+  await ctx.addCookies([{name:'sb-mpxvegyzpybnipokztbz-auth-token', value:b64, domain:'carrybee-lead-crm.vercel.app', path:'/', secure:true, sameSite:'Lax'}]);
+  const page = await ctx.newPage(); const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+  await page.goto('https://carrybee-lead-crm.vercel.app/', {waitUntil:'domcontentloaded', timeout:90000});
+  await page.waitForTimeout(3000);
+  await page.click('text=All leads'); await page.waitForTimeout(2500);
+  await page.click('table tbody tr >> nth=0'); await page.waitForTimeout(2500);
+  const opts = await page.$$eval('select', els => els.map(e => e.name || e.id || e.className).slice(0,8));
+  const catSel = await page.$('select[name="productCategory"], aside.drawer select');
+  const values = await page.$$eval('aside.drawer select', els => els.map(e => ({n: e.name, count: e.options.length, first: [...e.options].slice(0,4).map(o=>o.text)})));
+  const pc = values.find(v => v.n === 'profile_Product Category');
+  console.log('PRODUCT CATEGORY OPTIONS:', pc.count - 1, 'plus a blank');
+  await page.screenshot({path:'/home/user/product-categories.png', clip: {x: 950, y: 300, width: 540, height: 620}});
+  console.log('ERRS', errs.slice(0,2));
+  await browser.close();
+})();

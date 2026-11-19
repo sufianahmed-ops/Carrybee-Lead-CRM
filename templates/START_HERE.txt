@@ -1,0 +1,42 @@
+CARRYBEE CRM — GOOGLE SHEETS SETUP PACKAGE
+==========================================
+
+Files
+-----
+1. Carrybee_Input_Template.xlsx  — upload as the INPUT spreadsheet.
+2. Carrybee_Backup_Template.xlsx — upload as a separate BACKUP spreadsheet.
+3. CarrybeeInput.gs             — paste into the INPUT sheet's Apps Script editor.
+4. CarrybeeBackup.gs            — paste into the BACKUP sheet's Apps Script editor.
+5. INPUT_SHEET_SETUP.md         — detailed input instructions.
+6. APPS_SCRIPT_BACKUP.md        — detailed backup/recovery instructions.
+
+Quick start
+-----------
+1. In Google Drive, upload both Excel templates and open them with Google Sheets.
+2. Keep them as two separate spreadsheets.
+3. In the INPUT spreadsheet, open Extensions -> Apps Script. Paste CarrybeeInput.gs.
+   Replace PASTE_CRON_SECRET with the private CRON_SECRET stored in Vercel.
+   Save and run setupCarrybeeInput. Approve Google's authorization prompts.
+4. Reload INPUT and run Sync now. Keep Data_Dump_2 and 1st_Order_Date_Dump connected
+   to their automatic feeds; do not bulk-paste legacy rows. New post-cutoff Self Registered
+   merchants import unassigned, while existing CRM leads are preserved without duplicates.
+5. Review Input_Status, Call_Queue, Care_Period, and Auto_Sync_Status. For manual calls,
+   paste raw rows into Data_Dump, run Sync now, choose Assigned To, and set Ready = YES
+   only for approved rows. Run Sync now again and inspect every row result.
+6. Activate the five-minute input schedule only after the real manual sync is clean.
+7. In the BACKUP spreadsheet, copy its ID from the URL between /d/ and the next /.
+8. Open Extensions -> Apps Script and paste CarrybeeBackup.gs. Replace both placeholders:
+   PASTE_BACKUP_SPREADSHEET_ID and PASTE_CRON_SECRET. Save and run setupCarrybeeBackup.
+9. Run testCarrybeeBackup. Verify Backup_Status!A2 = SUCCESS and inspect the actual tabs.
+10. Only after that manual backup succeeds, run activateCarrybeeSchedule separately.
+
+Security
+--------
+Never publish the CRON_SECRET or commit a configured Apps Script to a public repository.
+Do not place passwords or secrets inside spreadsheet cells. Keep script projects private.
+
+Important
+---------
+The Excel files are blank operational templates, not sample CRM data. The input template
+contains current team/status/channel dropdowns; setupCarrybeeInput refreshes them live.
+Supabase remains the source of truth. The backup script never writes operational CRM edits.

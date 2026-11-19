@@ -1,0 +1,24 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+(async () => {
+  const b64 = fs.readFileSync('/tmp/main_cookie3.txt','utf8').trim();
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: {width:1560,height:1000}, permissions: ['clipboard-read','clipboard-write'] });
+  await ctx.addCookies([{name:'sb-mpxvegyzpybnipokztbz-auth-token', value:b64, domain:'carrybee-lead-crm.vercel.app', path:'/', secure:true, sameSite:'Lax'}]);
+  const page = await ctx.newPage(); const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+  await page.goto('https://carrybee-lead-crm.vercel.app/', {waitUntil:'domcontentloaded', timeout:120000});
+  await page.waitForSelector('text=New to LQT', {timeout:120000});
+  await page.locator('.sidebar >> text=New to LQT').click(); await page.waitForTimeout(3000);
+  await page.locator('tbody tr').first().click();
+  await page.waitForSelector('.drawer', {timeout:30000});
+  await page.waitForTimeout(800);
+  const phone = (await page.innerText('.drawer .row')).split('\n')[0].trim();
+  const btn = page.getByRole('button', {name: /Copy phone number|Phone number copied/});
+  console.log('button present:', await btn.count(), '| label:', (await btn.innerText()).trim());
+  await btn.click(); await page.waitForTimeout(600);
+  const clip = await page.evaluate(() => navigator.clipboard.readText());
+  console.log('phone shown:', phone, '| clipboard:', clip);
+  console.log('label after click:', (await btn.innerText()).trim());
+  await page.screenshot({path:'/home/user/copy-phone.png', clip: {x: 1050, y: 0, width: 510, height: 260}});
+  await browser.close();
+})();
