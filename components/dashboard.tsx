@@ -1,4 +1,7 @@
 'use client';
+
+import { ChevronRight } from 'lucide-react';
+
 /**
  * Management dashboard for the LQT / Incubation operation.
  *

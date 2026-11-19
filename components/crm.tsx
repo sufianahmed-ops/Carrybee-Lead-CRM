@@ -554,7 +554,7 @@ export default function CRM() {
       {currentView.special === 'reports' && <Reports isLead={isLead} />}
       {currentView.special === 'dash' && <Dashboard stats={dash} loading={dashLoading} days={dashDays} onDays={setDashDays} team={dashTeam} onTeam={setDashTeam} go={go} periodFrom={dashFrom} periodTo={dashTo} onPeriodFrom={setDashFrom} onPeriodTo={setDashTo} liveToday={dashLive} onLiveToday={setDashLive} meName={me.name} myQueue={myQueue} myStats={myStats} />}
       {currentView.special === 'queue' && <Queue leads={queueRows()} open={openLead} stage={myStage} filtered={anyFilter || !!query.trim()} query={query} />}
-      {currentView.special === 'flow' && <Flow data={data} go={go} />}
+      {currentView.special === 'flow' && <Flow data={data} go={go} useServer={useServer} countsMap={countsMap} />}
       {currentView.special === 'script' && <><h1 className="page-title">Call script</h1><p className="subtitle">Cover every talking point with each merchant. Script text is backed up with the configuration.</p>{data.scripts.map(p => <div className="card" key={p.point_number}><b>{p.point_number}. {p.talking_point}</b><p style={{ whiteSpace: 'pre-wrap', marginBottom: 0 }}>{p.script_text || <span className="mute">No script yet. Add it in Supabase or the original sheet before migration.</span>}</p></div>)}</>}
       {currentView.special === 'nobid' && <MissingBusinessId supabase={supabase} leads={data.leads}
         mine={me?.name || ''} isLqtLead={isLead} onOpenLead={openLead} onSaved={() => refresh(false)} />}
@@ -656,7 +656,7 @@ function Queue({ leads, open, stage, filtered, query }: { leads: Lead[]; open: (
         </div>}
   </div>;
 }
-function Flow({ data, go }: { data: Bootstrap; go: (id: string) => void }) {
+function Flow({ data, go, useServer, countsMap }: { data: Bootstrap; go: (id: string) => void; useServer: boolean; countsMap: Record<string, number> }) {
   const s = (key: string) => setting(data.settings,key); const count = (tab: string) => (useServer && countsMap['tab:'+tab]!==undefined ? countsMap['tab:'+tab] : data.leads.filter(l => l.tab === tab).length);
   const Step = ({ title, text, n, view }: { title: string; text: string; n: number; view: string }) => <button className="step" onClick={() => go(view)}><b>{title}</b><span>{text}</span><strong>{n}</strong></button>;
   return <><h1 className="page-title">How it works</h1><p className="subtitle">Lead movement and timing rules, now calculated directly in Postgres.</p><div className="lanes">
