@@ -11,3 +11,10 @@ scripts/*.json
 import-data.json
 *.xlsx
 invitation-links.md
+/dist/
+.vinext/
+.cloudflare/
+.agents/
+.claude/
+agent/
+skills-lock.json

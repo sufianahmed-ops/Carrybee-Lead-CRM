@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     const enabled = (cfg?.find(c=>c.key==='ESCALATION_ENABLED')?.value || 'true') !== 'false';
 
     // compute overdue>days via RPC if available, else via view
-    const { data: health } = await admin.rpc('check_overdue_escalations' as any).then(r=>({data:null,error:r.error})).catch(()=>({data:null,error:null}));
+    const { data: health } = await Promise.resolve(admin.rpc('check_overdue_escalations' as any)).then(r=>({data:null,error:r.error})).catch(()=>({data:null,error:null}));
     // For GET we do not want to re-notify, so just read tracker + snapshot counts
     const { data: tracker } = await admin.from('escalation_tracker').select('member_id,last_escalated_at,last_overdue_count');
     // counts: use snapshot grouping client-side via query

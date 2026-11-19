@@ -6,7 +6,7 @@ Next.js 15 CRM with Supabase as the only live operational database. Google Sheet
 
 ## Local development
 
-Use Node.js 22.
+Use Node.js 22.23+, 24.22+, or 26.12+ (the versions supported by the Cloudflare CLI dependency).
 
 ```bash
 npm install
@@ -69,6 +69,8 @@ See **`APPS_SCRIPT_BACKUP.md`** for setup and recovery. The Apps Script stores o
 Required Vercel variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and `CRON_SECRET`. `CARE_DAYS` defaults to 30 and can be managed in Team & access.
 
 Deploy runtime application files only (`app`, `components`, `lib`, `middleware.ts`, `package.json`, `tsconfig.json`, `next-env.d.ts`, and `next.config.ts`). Never deploy `.env.local`, local archives, test artifacts, or credentials. No Vercel cron is configured; Apps Script owns the external schedule.
+
+For the Cloudflare Workers deployment setup, including the `vinext` build, secrets, authentication, and Supabase redirect allowlist, see **`CLOUDFLARE_DEPLOYMENT.md`**.
 
 ## Verification
 
