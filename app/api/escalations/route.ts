@@ -11,17 +11,32 @@ function cronAuthorized(req: Request) {
 }
 
 export async function GET(request: Request) {
+  const cronOk = cronAuthorized(request);
+  if (!cronOk) {
+    try {
+      const supabase = await createClient();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError || !user) return NextResponse.json({ error: 'Sign in' }, { status: 401 });
+
+      const admin = createAdminClient();
+      const { data: member, error: memberError } = await admin
+        .from('team_members')
+        .select('role,is_main_admin,admin_access')
+        .eq('auth_user_id', user.id)
+        .eq('active', true)
+        .maybeSingle();
+      if (memberError) return NextResponse.json({ error: 'Unable to verify access' }, { status: 500 });
+      const isLead = !!member && (!!(member as any).is_main_admin || !!(member as any).admin_access || /lead|admin/i.test((member as any).role || ''));
+      if (!isLead) return NextResponse.json({ error: 'Lead/Admin access required' }, { status: 403 });
+    } catch {
+      // Fail closed if session validation or access verification is unavailable.
+      return NextResponse.json({ error: 'Unable to verify access' }, { status: 401 });
+    }
+  }
+
   try {
     const admin = createAdminClient();
-    // quick auth: allow any signed-in to read; cron bypasses
-    const cronOk = cronAuthorized(request);
-    if (!cronOk) {
-      try {
-        const supabase = await createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return NextResponse.json({ error: 'Sign in' }, { status: 401 });
-      } catch {}
-    }
+    // Scheduled callers may use CRON_SECRET; browser callers must be active Leads/Admins.
     // overdue snapshot via lead_list_snapshot
     const { data: cfg } = await admin.from('app_settings').select('key,value').in('key', ['ESCALATION_OVERDUE_DAYS','ESCALATION_MIN_COUNT','ESCALATION_ENABLED']);
     const days = Number(cfg?.find(c=>c.key==='ESCALATION_OVERDUE_DAYS')?.value || 2);

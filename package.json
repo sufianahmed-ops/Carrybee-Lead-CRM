@@ -49,5 +49,8 @@
     "typescript": "^5.9.2",
     "vite": "^8.3.8"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "postcss": "^8.5.33"
+  }
 }

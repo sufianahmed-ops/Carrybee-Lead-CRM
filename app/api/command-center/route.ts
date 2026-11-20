@@ -18,15 +18,20 @@ export async function GET(req: Request) {
   const after13 = url.searchParams.get('after13nov') === '1' || url.searchParams.get('after13nov') === 'true';
   const dateMode = (url.searchParams.get('dateMode') as DateMode) || 'registration';
 
-  // auth: must be Lead/Admin but allow any authenticated for preview (return 403 with helpful msg otherwise)
   const supabaseAuth = await createClient();
-  const { data: { user } } = await supabaseAuth.auth.getUser();
-  if (!user) return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
+  const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+  if (authError || !user) return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
 
   const admin = createAdminClient();
-  // check role (soft — still allow read but flag)
-  const { data: me } = await admin.from('team_members').select('id,role,is_main_admin,admin_access,team').eq('auth_user_id', user.id).single();
+  const { data: me, error: memberError } = await admin
+    .from('team_members')
+    .select('id,role,is_main_admin,admin_access,team')
+    .eq('auth_user_id', user.id)
+    .eq('active', true)
+    .maybeSingle();
+  if (memberError) return NextResponse.json({ error: 'Unable to verify access' }, { status: 500 });
   const isLead = !!me && (!!(me as any).is_main_admin || !!(me as any).admin_access || /lead|admin/i.test((me as any).role || ''));
+  if (!isLead) return NextResponse.json({ error: 'Lead/Admin access required' }, { status: 403 });
 
   // date defaults: last 30 days
   const todayStr = new Date().toISOString().slice(0, 10);
